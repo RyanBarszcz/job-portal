@@ -19,11 +19,12 @@ app.use(cors())
 app.use(express.json())
 
 // Routes
+app.post('/webhooks', express.raw({ type: 'application/json' }), clerkWebhooks)
 app.get('/', (req, res) => res.send('API Working'))
 app.get("/debug-sentry", function mainHandler(req, res) {
   throw new Error("My first Sentry error!");
 });
-app.post('/webhooks', clerkWebhooks)
+// app.post('/webhooks', clerkWebhooks)
 
 // Port
 const PORT = process.env.PORT || 5000
