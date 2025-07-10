@@ -28,7 +28,7 @@ export const getUserData = async (req, res) => {
 // Apply for a job
 export const applyForJob = async (req, res) => {
 
-    const { id } = req.body
+    const { jobId } = req.body
 
     const userId = req.auth.userId
 
@@ -36,7 +36,7 @@ export const applyForJob = async (req, res) => {
 
         const isAlreadyApplied = await JobApplication.find({ jobId, userId })
 
-        if (isAlreadyApplied > 0) {
+        if (isAlreadyApplied.length > 0) {
             return res.json({ success: false, message: "Already applied" })
         }
 
@@ -91,7 +91,7 @@ export const updateUserResume = async (req, res) => {
 
         const userId = req.auth.userId
 
-        const resumeFile = req.resumeFile
+        const resumeFile = req.file
 
         const userData = await User.findById(userId)
 
