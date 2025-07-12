@@ -5,12 +5,13 @@ import { useNavigate } from 'react-router-dom'
 import { AppContext } from '../context/AppContext'
 import axios from 'axios'
 import { toast } from 'react-toastify'
+import Loading from '../components/Loading.jsx'
 
 const ManageJobs = () => {
 
     const navigate = useNavigate()
 
-    const [jobs, setJobs] = useState([])
+    const [jobs, setJobs] = useState(false)
 
     const { backendUrl, companyToken } = useContext(AppContext)
 
@@ -39,27 +40,31 @@ const ManageJobs = () => {
     const changeJobVisibility = async (id) => {
         try {
 
-            const  {data} = await axios.post(backendUrl + "/api/company/change-visibility", {id}, {headers: {token: companyToken}})
+            const { data } = await axios.post(backendUrl + "/api/company/change-visibility", { id }, { headers: { token: companyToken } })
 
-            if(data.success) {
+            if (data.success) {
                 toast.success(data.message)
                 fetchCompanyJobs()
             } else {
                 toast.error(data.message)
             }
-            
+
         } catch (error) {
             toast.error(error.message)
         }
     }
 
     useEffect(() => {
-        if(companyToken) {
+        if (companyToken) {
             fetchCompanyJobs()
         }
     }, [companyToken])
 
-    return (
+    return jobs ? jobs.length === 0 ? (
+        <div className='flex items-center justify-center h-[70vh]'>
+            <p className='text-xl sm:text-2xl'>No Jobs Available or Posted</p>
+        </div>
+    ) : (
         <div className='container p-4 max-w-5xl'>
             <div className='overflow-x-auto'>
                 <table className='min-w-full bg-white border border-gray-200 max-sm:text-sm'>
@@ -82,7 +87,7 @@ const ManageJobs = () => {
                                 <td className='py-2 px-4 border-b border-gray-200 max-sm:hidden'>{job.location}</td>
                                 <td className='py-2 px-4 border-b border-gray-200 text-center'>{job.applicants}</td>
                                 <td className='py-2 px-4 border-b border-gray-200'>
-                                    <input onChange={() => changeJobVisibility(job._id)} className='scale-125 ml-4' type="checkbox" checked={job.visible}/>
+                                    <input onChange={() => changeJobVisibility(job._id)} className='scale-125 ml-4' type="checkbox" checked={job.visible} />
                                 </td>
                             </tr>
                         ))}
@@ -95,7 +100,7 @@ const ManageJobs = () => {
                 </button>
             </div>
         </div>
-    )
+    ) : <Loading />
 }
 
 export default ManageJobs
