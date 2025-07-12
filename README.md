@@ -8,7 +8,7 @@ Built with:
 - ☁️ MongoDB Atlas, Cloudinary
 - 🔐 Clerk for authentication
 
-Live Demo: [https://job-portal.vercel.app](https://job-portal.vercel.app)
+Live Demo: [https://job-portal-new-client-one-ashen.vercel.app/](https://job-portal-new-client-one-ashen.vercel.app/)
 
 ---
 
