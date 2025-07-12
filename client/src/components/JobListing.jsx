@@ -94,7 +94,7 @@ const JobListing = () => {
                     <h4 className='font-medium text-lg py-4 pt-14'>Search by Location</h4>
                     <ul className='space-y-4 text-grey-600'>
                         {
-                            JobLocations.map((location, index) => (
+                            JobLocations.sort().map((location, index) => (
                                 <li className='flex gap-3 items-center' key={index}>
                                     <input
                                         className='scale-125'
