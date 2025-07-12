@@ -27,4 +27,4 @@ dist-ssr
 .env.*.local
 client/.env
 server/.env
-
+notes.txt
